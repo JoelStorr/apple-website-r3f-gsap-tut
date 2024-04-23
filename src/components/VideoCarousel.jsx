@@ -21,7 +21,7 @@ const VideoCarousel = () => {
 
 
   //NOTE: Add GSAP YT Vid 1:44:30
-  useGSAP()
+  
   
 
   useEffect(() => {
