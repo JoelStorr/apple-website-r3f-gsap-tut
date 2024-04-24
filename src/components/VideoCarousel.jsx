@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { hightlightsSlides } from "../constants";
 import gsap from "gsap";
 import { pauseImg, playImg, replayImg } from "../utils";
+import { useGSAP } from "@gsap/react";
 
 const VideoCarousel = () => {
-  const videoRef = useRef([]);
+  const videoRef = useRef([...hightlightsSlides]);
   const videoSpanRef = useRef([]);
   const videoDivRef = useRef([]);
 
@@ -21,7 +22,21 @@ const VideoCarousel = () => {
 
 
   //NOTE: Add GSAP YT Vid 1:44:30
-  
+  useGSAP(()=>{
+    gsap.to('#video', {
+      scrollTrigger:{
+        trigger: '#video',
+        toggleActions: 'restart none none none'
+      },
+      onComplete: ()=>{
+        setVideo((pre)=>({
+          ...pre, 
+          startPlay: true,
+          isPlaying: true,
+        }))
+      }
+    })
+  },[isEnd, videoId])
   
 
   useEffect(() => {
@@ -33,6 +48,10 @@ const VideoCarousel = () => {
       }
     }
   }, [startPlay, videoId, loadedData]);
+
+
+  const handleLoadedMetaData = (i, e) => setLoadedData((pre) => [...pre, e]);
+
 
   useEffect(() => {
     const currentProgress = 0;
@@ -86,6 +105,7 @@ const VideoCarousel = () => {
                       isPlaying: true,
                     }));
                   }}
+                  onLoadedMetadata={(e) => handleLoadedMetaData(i,e)}
                 >
                   <source src={list.video} type="video/mp4" />
                 </video>
