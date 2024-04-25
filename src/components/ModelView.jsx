@@ -33,6 +33,7 @@ const ModelView = ({
         rotateSpeed={0.4}
         target={new THREE.Vector3(0,0,0)}
         onEnd={()=> setRotationState(controlRef.current.getAzimuthalAngle())}
+        enableZoom={false}
       />
       <group ref={groupRef} name={`${index === 1} ? 'small' : 'large'`} position={[0,0,0]}>
         <Suspense fallback={<Loader/>}>
