@@ -1,6 +1,6 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ModelView from "./ModelView";
 import { yellowImg } from "../utils";
 import * as THREE from "three";
@@ -8,18 +8,39 @@ import { Canvas } from "@react-three/fiber";
 import { View } from "@react-three/drei";
 
 import { models, sizes } from "../constants";
+import { animateWithGsapTimeline } from "../utils/animations";
 
 const Model = () => {
   const [size, setSize] = useState("small");
   const [model, setModel] = useState({
     title: "iPhone 15 Pro in Natural Titanium",
-    color: ["#8F8FA81", "#FFE7B9", "#6F6C64"],
+    color: ["#8F8A81", "#ffe7b9", "#6f6c64"],
     img: yellowImg,
   });
 
   // camera controll for model view
   const cameraControlSmall = useRef();
   const cameraControlLarge = useRef();
+
+  const tl = gsap.timeline();
+
+  useEffect(() => {
+
+
+    if (size === "large") {
+      animateWithGsapTimeline(tl, small, smallRotaion, "#view1", "#view2", {
+        transform: "translateX(-100%)",
+        duration: 2,
+      });
+    }
+
+    if (size === "small") {
+       animateWithGsapTimeline(tl, large, largeRotaion, "#view2", "#view1", {
+         transform: "translateX(0)",
+         duration: 2,
+       });
+    }
+  }, [size]);
 
   useGSAP(() => {
     gsap.to("#heading", { y: 0, opacity: 1 });
