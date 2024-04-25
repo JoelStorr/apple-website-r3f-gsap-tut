@@ -2,8 +2,8 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
-import { animateWithGsap } from "../utils/animations";
-import { explore1Img, explore2Img, exploreVideo } from "../utils";
+import { animateWithGsap } from "./../utils/animations";
+import { explore1Img, explore2Img, exploreVideo } from "./../utils";
 
 const Features = () => {
   const videoRef = useRef();
